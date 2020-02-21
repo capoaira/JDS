@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JDS - Designer</title>
+		<meta charset="utf-8">
+		<meta name="description" content="JDS - Designen sie hier ihre individuelle Wandlampe">
+		<meta name="keywords" content="JDS, lampe, wandlampe, designen, design">
+		<link rel="icon" type="img/png" href="img/logo.png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+		<script>
+			var anzahlRahmen = 0;
+		</script>
+		<script src="js/drag.js"></script>
+	</head>
+
+	<body>
+	<!-- Header ================================================================== -->
+		<header>
+			<nav>
+				
+			</nav>
+		</header>
+	<!-- Content ================================================================= -->
+		<div id="content">
+			<div class="sidebar">
+				<a href="javascript:void(0);" onclick="addRahmen(30, 70, '#000', '#fff');">Add img</a>
+			</div>
+			<div id="vorschau"></div>
+			<div class="sidebar">
+				<form style="display:none;">
+					<table>
+						<tr><dt></dt></tr>
+						<tr>
+							<td>Breite:</td>
+							<td>
+								<select id="width">
+									<option value="30">30 cm</option>
+									<option value="50">50 cm</option>
+									<option value="70">70 cm</option>
+									<option value="100">100 cm</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Höhe:</td>
+							<td>
+								<select id="height">
+									<option value="30">30 cm</option>
+									<option value="50">50 cm</option>
+									<option value="70">70 cm</option>
+									<option value="100">100 cm</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Rahmenfarbe:</td>
+							<td>
+								<select id="color">
+									<option value="#000">Natur</option>
+									<option value="#fff">Weiß</option>
+									<option value="#f00">Rot</option>
+									<option value="#00f">Blau</option>
+									<option value="#0f0">Grün</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Höhe:</td>
+							<td>
+								<select id="lightColor">
+									<option>Weiß (gedimmt)</option>
+									<option value="#fff">Weiß (hell)</option>
+									<option value="#f00">Rot</option>
+									<option value="#00f">Blau</option>
+									<option value="#0f0">Grün</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	<!-- Footer ================================================================== -->
+		<footer>
+			
+		</footer>
+	</body>
+</html>
