@@ -28,7 +28,7 @@ function addRahmen(height, width, color, lightColor) {
 		stopCount = true;
 		$('form').css('visibility', 'visible');
 		if (countdown < 2) {
-			if ($('form').css('display') == 'none' && currentObj !== this) {
+			if ($('form').css('display') == 'none' || currentObj !== this) {
 				buildMenu(this);
 			} else {
 				$('form').css('display', 'none');
