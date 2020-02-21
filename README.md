@@ -1,2 +1,3 @@
 # JDS
-A repo for a school project / Eine repo für ein Schulprojekt
+This repo is for a school project.
+Diese Repo ist für ein Schulprojekt.
