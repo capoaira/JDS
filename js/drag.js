@@ -52,21 +52,28 @@ function count() {
 	}
 }
 
-function drag(obj) {
-	$(obj).css('left', (mouseX - $(obj).width()/2) + 'px');
-	$(obj).css('top', (mouseY - $(obj).height()/2) + 'px');
-}
-
 function getCoords(e) {
 	mouseX = e.clientX;
 	mouseY = e.clientY;
 }
 
+function drag(obj) {
+	$(obj).css('left', (mouseX - $(obj).width()/2) + 'px');
+	$(obj).css('top', (mouseY - $(obj).height()/2) + 'px');
+}
+
 function buildMenu(obj) {
 	$('form').css('display', 'block');
 	currentObj = obj;
-	$('#width option[value="' + $(obj).attr('width') + '"]').attr('selected', 'selected')
-	$('#height option[value="' + $(obj).attr('height') + '"]').attr('selected', 'selected')
+	$('#width option').removeAttr('selected');
+	$('#height option').removeAttr('selected');
+	$('#color option').removeAttr('selected');
+	$('#lightColor option').removeAttr('selected');
+
+	$('#width option[value*="' + $(currentObj).css('width') + '"]').attr('selected', 'selected');
+	$('#height option[value*="' + $(currentObj).css('height') + '"]').attr('selected', 'selected');
+	$('#color option[value*="' + $(currentObj).css('border-color') + '"]').attr('selected', 'selected');
+	$('#lightColor option[value*="' + $(currentObj).attr('data-lightColor') + '"]').attr('selected', 'selected');
 }
 
 $(document).ready(function() {
