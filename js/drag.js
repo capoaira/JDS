@@ -1,6 +1,7 @@
 'use strict';
 var mouseX;
 var mouseY;
+var anzahlRahmen = 0;
 var toDragElem = null;
 var countdown = 0;
 var stopCount = true;
@@ -19,7 +20,6 @@ function addRahmen(height, width, color, lightColor) {
 	$('#rahmenNr' + anzahlRahmen).css('top', $('#vorschau').position().top + $('#vorschau').height()/2);
 	// Mousedown für PC, touchstart für Smartphones
 	$('#rahmenNr' + anzahlRahmen).mousedown(function() {
-		console.log('mousedown');
 		$('form').css('visibility', 'hidden');
 		toDragElem = this;
 		stopCount = false;
@@ -99,6 +99,15 @@ function buildMenu(obj) {
 	$('#height option[value*="' + $(currentObj).css('height') + '"]').attr('selected', 'selected');
 	$('#color option[value*="' + $(currentObj).css('border-color') + '"]').attr('selected', 'selected');
 	$('#lightColor option[value*="' + $(currentObj).attr('data-lightColor') + '"]').attr('selected', 'selected');
+}
+
+function deleteRahmen(){$(currentObj).remove();}
+
+function clearAll() {
+	for (let i=1; i<=anzahlRahmen; i++) {
+		if ($('#rahmenNr' + i)[0]) $('#rahmenNr' + i).remove();
+	}
+	anzahlRahmen = 0;
 }
 
 $(document).ready(function() {
