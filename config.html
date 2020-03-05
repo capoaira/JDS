@@ -9,9 +9,6 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-		<script>
-			var anzahlRahmen = 0;
-		</script>
 		<script src="js/drag.js"></script>
 	</head>
 
@@ -29,9 +26,9 @@
 			</div>
 			<div id="vorschau"></div>
 			<div class="sidebar">
+				<input id="clear" type="button" value="Alles löschen" onclick="clearAll();" />
 				<form style="display:none;">
 					<table>
-						<tr><dt></dt></tr>
 						<tr>
 							<td>Breite:</td>
 							<td>
@@ -77,6 +74,9 @@
 									<option value="#0f0">Grün</option>
 								</select>
 							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><input type="button" value="Löschen" onclick="deleteRahmen();" /></td>
 						</tr>
 					</table>
 				</form>
