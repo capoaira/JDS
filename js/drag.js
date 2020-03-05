@@ -20,14 +20,14 @@ function addRahmen(height, width, color, lightColor) {
 	$('#rahmenNr' + anzahlRahmen).css('top', $('#vorschau').position().top + $('#vorschau').height()/2);
 	// Mousedown für PC, touchstart für Smartphones
 	$('#rahmenNr' + anzahlRahmen).mousedown(function() {
-		$('form').css('visibility', 'hidden');
+		$('#menue').css('visibility', 'hidden');
 		toDragElem = this;
 		stopCount = false;
 		count();
 	});
 	$('#rahmenNr' + anzahlRahmen).on('touchstart', function() {
 		console.log('touchstart');
-		$('form').css('visibility', 'hidden');
+		$('#menue').css('visibility', 'hidden');
 		toDragElem = this;
 		stopCount = false;
 		count();
@@ -35,13 +35,13 @@ function addRahmen(height, width, color, lightColor) {
 	$('#rahmenNr' + anzahlRahmen).mouseup(function() {
 		toDragElem = null;
 		stopCount = true;
-		$('form').css('visibility', 'visible');
+		$('#menue').css('visibility', 'visible');
 		if (countdown < 2) {
-			if ($('form').css('display') == 'none' || currentObj !== this) {
+			if ($('#menue').css('display') == 'none' || currentObj !== this) {
 				buildMenu(this);
 			} else {
-				$('form').css('display', 'none');
-				$('form').css('visibility', 'hidden');
+				$('#menue').css('display', 'none');
+				$('#menue').css('visibility', 'hidden');
 				currentObj = null;
 			}
 		} else {
@@ -51,13 +51,13 @@ function addRahmen(height, width, color, lightColor) {
 	$('#rahmenNr' + anzahlRahmen).on('touchend', function() {
 		toDragElem = null;
 		stopCount = true;
-		$('form').css('visibility', 'visible');
+		$('#menue').css('visibility', 'visible');
 		if (countdown < 2) {
-			if ($('form').css('display') == 'none' || currentObj !== this) {
+			if ($('#menue').css('display') == 'none' || currentObj !== this) {
 				buildMenu(this);
 			} else {
-				$('form').css('display', 'none');
-				$('form').css('visibility', 'hidden');
+				$('#menue').css('display', 'none');
+				$('#menue').css('visibility', 'hidden');
 				currentObj = null;
 			}
 		} else {
@@ -88,7 +88,7 @@ function drag(obj) {
 }
 
 function buildMenu(obj) {
-	$('form').css('display', 'block');
+	$('#menue').css('display', 'block');
 	currentObj = obj;
 	$('#width option').removeAttr('selected');
 	$('#height option').removeAttr('selected');
@@ -101,13 +101,19 @@ function buildMenu(obj) {
 	$('#lightColor option[value*="' + $(currentObj).attr('data-lightColor') + '"]').attr('selected', 'selected');
 }
 
-function deleteRahmen(){$(currentObj).remove();}
+function deleteRahmen() {
+	$(currentObj).remove();
+	$('#menue').css('display', 'none');
+	$('#menue').css('visibility', 'hidden');
+}
 
 function clearAll() {
 	for (let i=1; i<=anzahlRahmen; i++) {
 		if ($('#rahmenNr' + i)[0]) $('#rahmenNr' + i).remove();
 	}
 	anzahlRahmen = 0;
+	$('#menue').css('display', 'none');
+	$('#menue').css('visibility', 'hidden');
 }
 
 $(document).ready(function() {
