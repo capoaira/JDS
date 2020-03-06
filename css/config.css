@@ -1,0 +1,44 @@
+body {
+	font-family: Roboto;
+	font-size: 14px;
+}
+
+#content {
+	display: flex;
+	position: fixed;
+	justify-content: space-around;
+	width: 99%;
+	height: calc(100% - 80px - 50px);
+}
+
+#vorschau {
+	width: 65%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 1px solid #000;
+	border-radius: 10px;
+	background-color: #dedede;
+	padding: 10px;
+}
+
+.rahmen {
+	position: fixed;
+	box-sizing: border-box;
+	border: 5px solid #000;
+}
+
+.sidebar {
+	width: 15%;
+	border: 1px solid #000;
+	padding: 10px;
+	text-align: center;
+}
+
+form, table, tr, td:nth-child(2), select {
+	width: 100%;
+}
+
+td:nth-child(1) {
+	text-align: left;
+	padding-right: 30%;
+}
