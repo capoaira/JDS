@@ -8,7 +8,7 @@
 
 body {
 	background-color: #EDEBE8;
-	background-image: url("Bilder/Titelbild.jpg");
+	background-image: url("../img/titelbild.jpg");
 }
 
 header {
@@ -17,6 +17,18 @@ header {
 	height: 50px;
 	text-align: left;
 	background-color: rgba(0,0,0,0.7);
+}
+
+ul li b {
+	color: white;
+}
+
+.menue-list{
+	display: none;
+}
+
+.open{
+	display: unset;
 }
 
 h1{
