@@ -8,7 +8,7 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 	var stopCount = true;
 	var currentObj = null;
 	var wandBreite, wandHoehe;
-	var cm;					// Gib an, wie viele px ein cm sind
+	var cm;						// Gib an, wie viele px ein cm sind
 
 	function addRahmen(height, width, color, lightColor) {
 		anzahlRahmen++;
@@ -22,19 +22,18 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 		$('#rahmenNr' + anzahlRahmen).css('left', $('#vorschau').position().left + $('#vorschau').width()/2);
 		$('#rahmenNr' + anzahlRahmen).css('top', $('#vorschau').position().top + $('#vorschau').height()/2);
 		// Mousedown für PC, touchstart für Smartphones
-		$('#rahmenNr' + anzahlRahmen).mousedown(function() {
+		$('#rahmenNr' + anzahlRahmen).on('mousedown', FMousedown);
+		$('#rahmenNr' + anzahlRahmen).on('mouseup', FMouseup);
+		$('#rahmenNr' + anzahlRahmen).on('touchstart', FMousedown);
+		$('#rahmenNr' + anzahlRahmen).on('touchend', FMouseup);
+		
+		function FMousedown() {
 			$('#menue').css('visibility', 'hidden');
 			toDragElem = this;
 			stopCount = false;
 			count();
-		});
-		$('#rahmenNr' + anzahlRahmen).on('touchstart', function() {
-			$('#menue').css('visibility', 'hidden');
-			toDragElem = this;
-			stopCount = false;
-			count();
-		});
-		$('#rahmenNr' + anzahlRahmen).mouseup(function() {
+		}
+		function FMouseup() {
 			toDragElem = null;
 			stopCount = true;
 			$('#menue').css('visibility', 'visible');
@@ -49,23 +48,7 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 			} else {
 				buildMenu(this);
 			}
-		});
-		$('#rahmenNr' + anzahlRahmen).on('touchend', function() {
-			toDragElem = null;
-			stopCount = true;
-			$('#menue').css('visibility', 'visible');
-			if (countdown < 2) {
-				if ($('#menue').css('display') == 'none' || currentObj !== this) {
-					buildMenu(this);
-				} else {
-					$('#menue').css('display', 'none');
-					$('#menue').css('visibility', 'hidden');
-					currentObj = null;
-				}
-			} else {
-				buildMenu(this);
-			}
-		});
+		}
 	}
 
 	function count() {
@@ -166,12 +149,12 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 					function isImgLoad(waitcount) {
 						if ($(img).height() > 1 && $(img).width() > 1) {
 							if ($(img).height() >  $('#vorschau').height()) {
-								$(img).css('height', $('#vorschau').height() + 'px')
+								$(img).css('height', $('#vorschau').height() + 'px');
 							}
 							if ($(img).width() >  $('#vorschau').width()) {
-								$(img).css('width', $('#vorschau').width() + 'px')
+								$(img).css('width', $('#vorschau').width() + 'px');
 							}
-							$('#vorschau').css('background-image', 'url(' + e.target.result + ')')
+							$('#vorschau').css('background-image', 'url(' + e.target.result + ')');
 							$('#vorschau').css('min-width', $(img).width() + 'px');
 							$('#vorschau').css('width', $(img).width() + 'px');
 							$('#vorschau').css('min-height', $(img).height() + 'px');
@@ -226,7 +209,7 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 			$('.step2').css('display', 'none');
 			$('.step3').css('display', 'unset');
 			$('.step3 a').click(step3save);
-			$('#vorschau').css('cursor', 'crosshair')
+			$('#vorschau').css('cursor', 'crosshair');
 			$('#vorschau').on('mousedown', FMousedown);
 			$('#vorschau').on('mousemove', FMousemove);
 			$('#vorschau').on('mouseup', FMouseup);
@@ -243,8 +226,8 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 				$('.marker').css('display', 'unset');
 				$('.marker').css('width', '0px');
 				$('.marker').css('height', '0px');
-				$('.marker').css('left', startX)
-				$('.marker').css('top', startY)
+				$('.marker').css('left', startX);
+				$('.marker').css('top', startY);
 			}
 			
 			function FMousemove() {
@@ -283,20 +266,23 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 					var cmHoehe = local_wandHoehe/wandHoehe;
 					// Prüfe ob die Differenz zwischen Höhe und Breite zu groß ist.
 					var diff = (cmBreite > cmHoehe ? cmBreite-cmHoehe : cmHoehe-cmBreite);
-					if (diff > 15) {
+					console.log(diff);
+					if (diff > 0.1) {
 						$('.step1').css('display', 'unset');
+						$('.step3').css('display', 'none');
+						alert('Leider ist das Foto oder die gemessenen Werte zu ungeau. Bitte versuche es nochmal');
 					} else {
 						$('#vorschau').css('cursor', 'auto');
 						$('.step4').css('display', 'unset')
-						$('#vorschau').off('mousedown',  FMousedown);
-						$('#vorschau').off('mousemove',  FMousemove);
+						$('.step3').css('display', 'none');
+						$('#vorschau').off('mousedown', FMousedown);
+						$('#vorschau').off('mousemove', FMousemove);
 						$('#vorschau').off('mouseup', FMouseup);
-						$('#vorschau').off('touchstart',  FMousedown);
-						$('#vorschau').off('touchmove',  FMousemove);
+						$('#vorschau').off('touchstart', FMousedown);
+						$('#vorschau').off('touchmove', FMousemove);
 						$('#vorschau').off('touchend', FMouseup);
 						cm = (cmBreite+cmHoehe)/2;
 					}
-					$('.step3').css('display', 'none');
 				}
 			}
 		}
