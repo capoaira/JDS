@@ -29,6 +29,7 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 		
 		function FMousedown() {
 			$('#menue').css('visibility', 'hidden');
+			$(this).addClass('dragging');
 			toDragElem = this;
 			stopCount = false;
 			count();
@@ -36,6 +37,7 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 		function FMouseup() {
 			toDragElem = null;
 			stopCount = true;
+			$(this).removeClass('dragging');
 			$('#menue').css('visibility', 'visible');
 			if (countdown < 2) {
 				if ($('#menue').css('display') == 'none' || currentObj !== this) {
@@ -121,12 +123,12 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 		$('#height').change(function() {
 			$(currentObj).css('height', $('#height').val()*cm + 'px');
 		});
-		$('#color').change(function() {
+/*		$('#color').change(function() {
 			$(currentObj).css('border-color', $('#color').val());
 		});
 		$('#lightColor').change(function() {
 			$(currentObj).attr('data-lightColor', $('#lightColor').val());
-		});
+		});*/
 	});
 	
 	function dateiauswahl(evt) {
@@ -264,25 +266,17 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 					// Berechne wie viele px ein cm sind
 					var cmBreite = local_wandBreite/wandBreite; // Gib an, wie viele px ein cm sind
 					var cmHoehe = local_wandHoehe/wandHoehe;
-					// Prüfe ob die Differenz zwischen Höhe und Breite zu groß ist.
-					var diff = (cmBreite > cmHoehe ? cmBreite-cmHoehe : cmHoehe-cmBreite);
-					console.log(diff);
-					if (diff > 0.1) {
-						$('.step1').css('display', 'unset');
-						$('.step3').css('display', 'none');
-						alert('Leider ist das Foto oder die gemessenen Werte zu ungeau. Bitte versuche es nochmal');
-					} else {
-						$('#vorschau').css('cursor', 'auto');
-						$('.step4').css('display', 'unset')
-						$('.step3').css('display', 'none');
-						$('#vorschau').off('mousedown', FMousedown);
-						$('#vorschau').off('mousemove', FMousemove);
-						$('#vorschau').off('mouseup', FMouseup);
-						$('#vorschau').off('touchstart', FMousedown);
-						$('#vorschau').off('touchmove', FMousemove);
-						$('#vorschau').off('touchend', FMouseup);
-						cm = (cmBreite+cmHoehe)/2;
-					}
+					cm = (cmBreite+cmHoehe)/2;
+					$('#vorschau').css('cursor', 'auto');
+					$('.step4').css('display', 'unset')
+					$('.step3').css('display', 'none');
+					$('#vorschau').off('mousedown', FMousedown);
+					$('#vorschau').off('mousemove', FMousemove);
+					$('#vorschau').off('mouseup', FMouseup);
+					$('#vorschau').off('touchstart', FMousedown);
+					$('#vorschau').off('touchmove', FMousemove);
+					$('#vorschau').off('touchend', FMouseup);
+					cm = (cmBreite+cmHoehe)/2;
 				}
 			}
 		}
