@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 		<link rel="stylesheet" type="text/css" href="css/config.css">
 		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-		<script src="js/drag.js"></script>
+		<script src="js/config.js"></script>
 	</head>
 
 	<body>
@@ -22,21 +22,42 @@
 	<!-- Content ================================================================= -->
 		<div id="content">
 			<div class="sidebar">
-				<a href="javascript:void(0);" onclick="addRahmen(30, 70, '#000', '#fff');">Add Rahmen</a>
+				<a class="step4" href="javascript:void(0);" onclick="addRahmen(30, 90, '#000', '#fff');">Add Rahmen</a>
+				<div class="step1">
+					Lade ein Bild von deiner Wand hoch.<br>
+					<input type="file" id="files" name="files[]" accept="image/png, image/jpg, image/jpeg" multiple="false" /><br>
+					<a class="inactive" href="javascript:void(0);" onclick="step1save();">weiter</a>
+				</div>
+				<div class="step2">
+					Bitte gebe die Höhe und die Breite deiner Wand an:<br>
+					Höhe: <input id="hoehe" type="number" step="1" value="0" /> cm<br>
+					Breite: <input id="breite" type="number" step="1" value="0" /> cm<br>
+					<a class="inactive" href="javascript:void(0);" onclick="step2save();">weiter</a>
+				</div>
+				<div class="step3">
+					Markiere in der Vorschau den Bereich deiner Wand.<br>
+					<a class="inactive"  href="javascript:void(0);">weiter</a>
+				</div>
 			</div>
-			<div id="vorschau"></div>
+			<div id="vorschau">
+				<div class="hinweis">Diese Seite ist für ein Schulprojekt, den "Deutschen Gründerpreis für Schüler". <a href="https://www.dgp-schueler.de" target="_blank">Hier</a> findet ihr mehr Hinweise: <a href="https://www.dgp-schueler.de" target="_blank">https://www.dgp-schueler.de</a></div>
+				<div class="hinweis">Dieser Konfigurator zeigt Euch, wie unsere Designerlampe bei Euch zu Hause aussehen kann.<br>
+				Bitte beachten Sie jedoch, dass jedes, noch so gerade, Foto vor allem am Rand verzerrt ist.<br>
+				Dieser Konfigurator ist also leider <b>kein</b> Ersatz zum ausmessen.<br>
+				<b>Dennoch ist er annähernd Maßstabsgetreu und bietet er Euch eine gute Gelegenheit, zu sehen, wie ihr Eure Designerlampe am besten bei Euch platziert werden kann.</b></div>
+				<div class="marker"></div>
+			</div>
 			<div class="sidebar">
-				<input id="clear" type="button" value="Alles löschen" onclick="clearAll();" />
+				<input id="clear" class="step4" type="button" value="Alles löschen" onclick="clearAll();" />
 				<form id="menue" style="display:none;">
 					<table>
 						<tr>
 							<td>Breite:</td>
 							<td>
 								<select id="width">
-									<option value="30px">30 cm</option>
-									<option value="50px">50 cm</option>
-									<option value="70px">70 cm</option>
-									<option value="100px">100 cm</option>
+									<option value="30">30 cm</option>
+									<option value="50">50 cm</option>
+									<option value="90">90 cm</option>
 								</select>
 							</td>
 						</tr>
@@ -44,10 +65,9 @@
 							<td>Höhe:</td>
 							<td>
 								<select id="height">
-									<option value="30px">30 cm</option>
-									<option value="50px">50 cm</option>
-									<option value="70px">70 cm</option>
-									<option value="100px">100 cm</option>
+									<option value="30">30 cm</option>
+									<option value="50">50 cm</option>
+									<option value="90">90 cm</option>
 								</select>
 							</td>
 						</tr>

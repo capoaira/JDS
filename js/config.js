@@ -1,5 +1,4 @@
-if (document.location.pathname.match(/konfigurator/)) {
-	console.log('config')
+if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 	'use strict';
 	var mouseX;
 	var mouseY;
@@ -8,13 +7,15 @@ if (document.location.pathname.match(/konfigurator/)) {
 	var countdown = 0;
 	var stopCount = true;
 	var currentObj = null;
+	var wandBreite, wandHoehe;
+	var cm;					// Gib an, wie viele px ein cm sind
 
 	function addRahmen(height, width, color, lightColor) {
 		anzahlRahmen++;
 		var html = '<div id="rahmenNr' + anzahlRahmen + '" '
 				 + 'class="rahmen" style="'
-				 + 'height:' + height + 'px; '
-				 + 'width:' + width + 'px;" '
+				 + 'height:' + height*cm + 'px; '
+				 + 'width:' + width*cm + 'px;" '
 				 + 'border-color="' + color + '" '
 				 + 'data-lightColor="' + lightColor + '"></div>';
 		$('#vorschau').append(html);
@@ -28,7 +29,6 @@ if (document.location.pathname.match(/konfigurator/)) {
 			count();
 		});
 		$('#rahmenNr' + anzahlRahmen).on('touchstart', function() {
-			console.log('touchstart');
 			$('#menue').css('visibility', 'hidden');
 			toDragElem = this;
 			stopCount = false;
@@ -119,6 +119,7 @@ if (document.location.pathname.match(/konfigurator/)) {
 	}
 
 	$(document).ready(function() {
+		$('#files').change(dateiauswahl);
 		$('#vorschau').mousemove(getCoords);
 		$('#vorschau').on('touchmove', getCoords);
 		$('#vorschau').mousemove(function() {
@@ -132,10 +133,10 @@ if (document.location.pathname.match(/konfigurator/)) {
 			}
 		});
 		$('#width').change(function() {
-			$(currentObj).css('width', $('#width').val());
+			$(currentObj).css('width', $('#width').val()*cm + 'px');
 		});
 		$('#height').change(function() {
-			$(currentObj).css('height', $('#height').val());
+			$(currentObj).css('height', $('#height').val()*cm + 'px');
 		});
 		$('#color').change(function() {
 			$(currentObj).css('border-color', $('#color').val());
@@ -144,8 +145,160 @@ if (document.location.pathname.match(/konfigurator/)) {
 			$(currentObj).attr('data-lightColor', $('#lightColor').val());
 		});
 	});
-
-	function log(msg) {
-		console.log(msg);
+	
+	function dateiauswahl(evt) {
+		$('.step1 a').removeClass('active');
+		$('.step1 a').addClass('inactive');
+		var dateien = evt.target.files; // FileList object
+		// Auslesen der gespeicherten Dateien durch Schleife
+		for (var i = 0, f; f = dateien[i]; i++) {
+			// nur Bild-Dateien
+			if (!f.type.match('image.*')) {
+				continue;
+			}
+			var reader = new FileReader();
+			reader.onload = (function (theFile) {
+				return function (e) {
+					var img = document.createElement('img');
+					img.src = e.target.result;
+					img.style.display = 'none';
+					$('#vorschau').append(img)
+					function isImgLoad(waitcount) {
+						if ($(img).height() > 1 && $(img).width() > 1) {
+							if ($(img).height() >  $('#vorschau').height()) {
+								$(img).css('height', $('#vorschau').height() + 'px')
+							}
+							if ($(img).width() >  $('#vorschau').width()) {
+								$(img).css('width', $('#vorschau').width() + 'px')
+							}
+							$('#vorschau').css('background-image', 'url(' + e.target.result + ')')
+							$('#vorschau').css('min-width', $(img).width() + 'px');
+							$('#vorschau').css('width', $(img).width() + 'px');
+							$('#vorschau').css('min-height', $(img).height() + 'px');
+							$('#vorschau').css('height', $(img).height() + 'px');
+							$('#vorschau img').remove();
+							$('.step1 a').removeClass('inactive');
+							$('.step1 a').addClass('active');
+							$('.hinweis').css('display', 'none');
+						} else {
+							waitcount++;
+							if (waitcount <= 10) {
+								window.setTimeout(function() {isImgLoad(waitcount);}, 100);
+							} else {
+								$('#vorschau img').remove();
+								alert('Leider ist beim Hochladen etwas schief gegengen, bitte versuche es erneut. Die Seite wird gleich nochmal neu geladen.');
+								window.setTimeout(function() {document.location = 'https://capoaira.github.io/JDS/config.html' || 'file:///C:/Users/Jannes/JDS/config.html';}, 2000);
+							}
+						}
+					}
+					isImgLoad(0);
+				};
+			})(f);
+			// Bilder als Data URL auslesen.
+			reader.readAsDataURL(f);
+		}
+	}
+	function step1save() {
+		if ($('.step1 a').hasClass('active')) {
+			$('.step1').css('display', 'none');
+			$('.step2').css('display', 'unset');
+			function shouldBeActive() {
+				if ($('#breite').val() >= 150 && $('#hoehe').val() >= 150) {
+					$('.step2 a').removeClass('inactive');
+					$('.step2 a').addClass('active');
+				} else {
+					$('.step2 a').removeClass('active');
+					$('.step2 a').addClass('inactive');
+				}
+			}
+			$('#breite').change(shouldBeActive);
+			$('#hoehe').change(shouldBeActive);
+		}
+	}
+	
+	function step2save() {
+		if ($('.step2 a').hasClass('active')) {
+			wandBreite = $('#breite').val();
+			wandHoehe = $('#hoehe').val();
+			var isMousedown = false;
+			var startX, startY;
+			var endX, endY;
+			$('.step2').css('display', 'none');
+			$('.step3').css('display', 'unset');
+			$('.step3 a').click(step3save);
+			$('#vorschau').css('cursor', 'crosshair')
+			$('#vorschau').on('mousedown', FMousedown);
+			$('#vorschau').on('mousemove', FMousemove);
+			$('#vorschau').on('mouseup', FMouseup);
+			$('#vorschau').on('touchstart', FMousedown);
+			$('#vorschau').on('touchmove', FMousemove);
+			$('#vorschau').on('touchend', FMouseup);
+			
+			function FMousedown() {
+				isMousedown = true;
+				startX = mouseX;
+				startY = mouseY;
+				$('.step3 a').removeClass('active');
+				$('.step3 a').addClass('inactive');
+				$('.marker').css('display', 'unset');
+				$('.marker').css('width', '0px');
+				$('.marker').css('height', '0px');
+				$('.marker').css('left', startX)
+				$('.marker').css('top', startY)
+			}
+			
+			function FMousemove() {
+				if (isMousedown) {
+					if (startX > mouseX) {
+						$('.marker').css('width', startX - mouseX + 'px');
+						$('.marker').css('left',  mouseX + 'px');
+					} else {
+						$('.marker').css('width', mouseX - startX + 'px');
+					}
+					if (startY > mouseY) {
+						$('.marker').css('height', startY - mouseY + 'px');
+						$('.marker').css('top',  mouseY + 'px');
+					} else {
+						$('.marker').css('height', mouseY - startY + 'px');
+					}
+				}
+			}
+			
+			function FMouseup() {
+				isMousedown = false;
+				endX = mouseX;
+				endY = mouseY;
+				$('.step3 a').removeClass('inactive');
+				$('.step3 a').addClass('active');
+			}
+			
+			function step3save() {
+				if (!isMousedown && $('.step3 a').hasClass('active')) {
+					// ToDo zoomen um nur die Wand zu haben, dann local_wandBreite durch $('#vorschau').width() ersetzten
+					// Berechne die Maße der Wand in px
+					var local_wandBreite = (startX > endX ? startX - endX : endX - startX);
+					var local_wandHoehe = (startY > endY ? startY - endY : endY - startY);
+					// Berechne wie viele px ein cm sind
+					var cmBreite = local_wandBreite/wandBreite; // Gib an, wie viele px ein cm sind
+					var cmHoehe = local_wandHoehe/wandHoehe;
+					// Prüfe ob die Differenz zwischen Höhe und Breite zu groß ist.
+					var diff = (cmBreite > cmHoehe ? cmBreite-cmHoehe : cmHoehe-cmBreite);
+					if (diff > 15) {
+						$('.step1').css('display', 'unset');
+					} else {
+						$('#vorschau').css('cursor', 'auto');
+						$('.step4').css('display', 'unset')
+						$('#vorschau').off('mousedown',  FMousedown);
+						$('#vorschau').off('mousemove',  FMousemove);
+						$('#vorschau').off('mouseup', FMouseup);
+						$('#vorschau').off('touchstart',  FMousedown);
+						$('#vorschau').off('touchmove',  FMousemove);
+						$('#vorschau').off('touchend', FMouseup);
+						cm = (cmBreite+cmHoehe)/2;
+					}
+					$('.step3').css('display', 'none');
+				}
+			}
+		}
 	}
 }

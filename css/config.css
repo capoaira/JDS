@@ -18,7 +18,18 @@ body {
 	border: 1px solid #000;
 	border-radius: 10px;
 	background-color: #dedede;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 	padding: 10px;
+}
+
+.hinweis {
+	width: 75%;
+	border: 5px solid #f00;
+	font-size: 20px;
+	text-align: center;
+	padding: 10px;
+	margin: 0 auto 20px auto;
 }
 
 .rahmen {
@@ -33,6 +44,27 @@ body {
 	padding: 10px;
 	text-align: center;
 }
+
+/* Einleitung */
+.step2, .step3, .step4 {
+	display: none;
+}
+
+.marker {
+	position: fixed;
+	display: none;
+	border: 3px solid #000;
+}
+
+.active {
+	cursor: pointer;
+}
+
+.inactive {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
 
 form, table, tr, td:nth-child(2), select {
 	width: 100%;
