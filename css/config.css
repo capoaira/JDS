@@ -1,6 +1,7 @@
 body {
 	font-family: Roboto;
 	font-size: 14px;
+	background-color: fff;
 }
 
 #content {
@@ -8,7 +9,7 @@ body {
 	position: fixed;
 	justify-content: space-around;
 	width: 99%;
-	height: 95%;
+	height: calc(95% - 30px);
 }
 
 #vorschau {
@@ -86,4 +87,20 @@ form, table, tr, td:nth-child(2), select {
 td:nth-child(1) {
 	text-align: left;
 	padding-right: 30%;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 99%;
+	font-size: 10px;
+	margin: auto;
+	padding: 10px;
+	background-color: #444444;
+	color: #fff;
+}
+
+footer a {
+	color: #fff;
 }
