@@ -11,6 +11,7 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 	var cmHoehe, cmBreite;		// Gib an, wie viele px ein cm sind
 
 	function addRahmen(height, width, color, lightColor) {
+		if (anzahlRahmen >=3) return;
 		anzahlRahmen++;
 		var html = '<div id="rahmenNr' + anzahlRahmen + '" '
 				 + 'class="rahmen" style="'
