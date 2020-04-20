@@ -47,7 +47,7 @@
 				<input id="clear" class="step4" type="button" value="Alles löschen" onclick="clearAll();" />
 				<form id="menue" style="display:none;">
 					<table>
-						<tr>
+<!--						<tr>
 							<td>Breite:</td>
 							<td>
 								<input id="width" type="number" step="1" value="100" /> cm<br>
@@ -58,16 +58,16 @@
 							<td>
 								<input id="height" type="number" step="1" value="40" /> cm<br>
 							</td>
-						</tr>
+						</tr>-->
 						<tr>
 							<td>Rahmenfarbe:</td>
 							<td>
 								<select id="color">
-									<option value="#000">Natur</option>
+									<option value="#000">Schwarz</option>
 									<option value="#fff">Weiß</option>
-									<option value="#f00">Rot</option>
+<!--									<option value="#f00">Rot</option>
 									<option value="#00f">Blau</option>
-									<option value="#0f0">Grün</option>
+									<option value="#0f0">Grün</option>-->
 								</select>
 							</td>
 						</tr>
@@ -82,6 +82,9 @@
 									<option value="#0f0">Grün</option>-->
 								</select>
 							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><input type="button" value="Drehen" onclick="turn();" /></td>
 						</tr>
 						<tr>
 							<td colspan="2"><input type="button" value="Löschen" onclick="deleteRahmen();" /></td>
