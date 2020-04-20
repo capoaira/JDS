@@ -8,14 +8,14 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 	var stopCount = true;
 	var currentObj = null;
 	var wandBreite, wandHoehe;
-	var cm;						// Gib an, wie viele px ein cm sind
+	var cmHoehe, cmBreite;		// Gib an, wie viele px ein cm sind
 
 	function addRahmen(height, width, color, lightColor) {
 		anzahlRahmen++;
 		var html = '<div id="rahmenNr' + anzahlRahmen + '" '
 				 + 'class="rahmen" style="'
-				 + 'height:' + height*cm + 'px; '
-				 + 'width:' + width*cm + 'px;" '
+				 + 'height:' + height*cmBreite + 'px; '
+				 + 'width:' + width*cmHoehe + 'px;" '
 				 + 'border-color="' + color + '" '
 				 + 'data-lightColor="' + lightColor + '"></div>';
 		$('#vorschau').append(html);
@@ -118,17 +118,17 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 			}
 		});
 		$('#width').change(function() {
-			$(currentObj).css('width', $('#width').val()*cm + 'px');
+			$(currentObj).css('width', $('#width').val()*cmBreite + 'px');
 		});
 		$('#height').change(function() {
-			$(currentObj).css('height', $('#height').val()*cm + 'px');
+			$(currentObj).css('height', $('#height').val()*cmHoehe + 'px');
 		});
-/*		$('#color').change(function() {
+		$('#color').change(function() {
 			$(currentObj).css('border-color', $('#color').val());
 		});
 		$('#lightColor').change(function() {
 			$(currentObj).attr('data-lightColor', $('#lightColor').val());
-		});*/
+		});
 	});
 	
 	function dateiauswahl(evt) {
@@ -264,9 +264,10 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 					var local_wandBreite = (startX > endX ? startX - endX : endX - startX);
 					var local_wandHoehe = (startY > endY ? startY - endY : endY - startY);
 					// Berechne wie viele px ein cm sind
-					var cmBreite = local_wandBreite/wandBreite; // Gib an, wie viele px ein cm sind
-					var cmHoehe = local_wandHoehe/wandHoehe;
-					cm = (cmBreite+cmHoehe)/2;
+					cmBreite = local_wandBreite/wandBreite; // Gib an, wie viele px ein cm sind
+					cmHoehe = local_wandHoehe/wandHoehe;
+					cmBreite = (cmBreite+cmHoehe)/2;
+					cmHoehe = (cmBreite+cmHoehe)/2;
 					$('#vorschau').css('cursor', 'auto');
 					$('.step4').css('display', 'unset')
 					$('.step3').css('display', 'none');
@@ -276,7 +277,6 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 					$('#vorschau').off('touchstart', FMousedown);
 					$('#vorschau').off('touchmove', FMousemove);
 					$('#vorschau').off('touchend', FMouseup);
-					cm = (cmBreite+cmHoehe)/2;
 				}
 			}
 		}
