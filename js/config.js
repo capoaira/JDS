@@ -3,6 +3,7 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 	var mouseX;
 	var mouseY;
 	var anzahlRahmen = 0;
+	var alleRahmen = 0;
 	var toDragElem = null;
 	var countdown = 0;
 	var stopCount = true;
@@ -10,22 +11,23 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 	var wandBreite, wandHoehe;
 	var cmHoehe, cmBreite;		// Gib an, wie viele px ein cm sind
 
-	function addRahmen(height, width, color, lightColor) {
+	function addRahmen(height, width, color) {
+		if (anzahlRahmen >=3) return;
 		anzahlRahmen++;
-		var html = '<div id="rahmenNr' + anzahlRahmen + '" '
+		alleRahmen++;
+		var html = '<div id="rahmenNr' + alleRahmen + '" '
 				 + 'class="rahmen" style="'
 				 + 'height:' + height*cmBreite + 'px; '
 				 + 'width:' + width*cmHoehe + 'px;" '
-				 + 'border-color="' + color + '" '
-				 + 'data-lightColor="' + lightColor + '"></div>';
+				 + 'border-color="' + color + '"></div>';
 		$('#vorschau').append(html);
-		$('#rahmenNr' + anzahlRahmen).css('left', $('#vorschau').position().left + $('#vorschau').width()/2);
-		$('#rahmenNr' + anzahlRahmen).css('top', $('#vorschau').position().top + $('#vorschau').height()/2);
+		$('#rahmenNr' + alleRahmen).css('left', $('#vorschau').position().left + $('#vorschau').width()/2);
+		$('#rahmenNr' + alleRahmen).css('top', $('#vorschau').position().top + $('#vorschau').height()/2);
 		// Mousedown für PC, touchstart für Smartphones
-		$('#rahmenNr' + anzahlRahmen).on('mousedown', FMousedown);
-		$('#rahmenNr' + anzahlRahmen).on('mouseup', FMouseup);
-		$('#rahmenNr' + anzahlRahmen).on('touchstart', FMousedown);
-		$('#rahmenNr' + anzahlRahmen).on('touchend', FMouseup);
+		$('#rahmenNr' + alleRahmen).on('mousedown', FMousedown);
+		$('#rahmenNr' + alleRahmen).on('mouseup', FMouseup);
+		$('#rahmenNr' + alleRahmen).on('touchstart', FMousedown);
+		$('#rahmenNr' + alleRahmen).on('touchend', FMouseup);
 		
 		function FMousedown() {
 			$('#menue').css('visibility', 'hidden');
@@ -77,28 +79,31 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 	function buildMenu(obj) {
 		$('#menue').css('display', 'block');
 		currentObj = obj;
-		$('#width option').removeAttr('selected');
-		$('#height option').removeAttr('selected');
 		$('#color option').removeAttr('selected');
-		$('#lightColor option').removeAttr('selected');
 
-		$('#width option[value*="' + $(currentObj).css('width') + '"]').attr('selected', 'selected');
-		$('#height option[value*="' + $(currentObj).css('height') + '"]').attr('selected', 'selected');
 		$('#color option[value*="' + $(currentObj).css('border-color') + '"]').attr('selected', 'selected');
-		$('#lightColor option[value*="' + $(currentObj).attr('data-lightColor') + '"]').attr('selected', 'selected');
 	}
 
 	function deleteRahmen() {
 		$(currentObj).remove();
 		$('#menue').css('display', 'none');
 		$('#menue').css('visibility', 'hidden');
+		anzahlRahmen--;
+	}
+	
+	function turn() {
+		var breite = $(currentObj).css('width');
+		var hoehe = $(currentObj).css('height');
+		$(currentObj).css('width', hoehe);
+		$(currentObj).css('height', breite);
 	}
 
 	function clearAll() {
-		for (let i=1; i<=anzahlRahmen; i++) {
+		for (let i=1; i<=alleRahmen; i++) {
 			if ($('#rahmenNr' + i)[0]) $('#rahmenNr' + i).remove();
 		}
 		anzahlRahmen = 0;
+		alleRahmen = 0;
 		$('#menue').css('display', 'none');
 		$('#menue').css('visibility', 'hidden');
 	}
@@ -117,17 +122,8 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 				drag(toDragElem);
 			}
 		});
-		$('#width').change(function() {
-			$(currentObj).css('width', $('#width').val()*cmBreite + 'px');
-		});
-		$('#height').change(function() {
-			$(currentObj).css('height', $('#height').val()*cmHoehe + 'px');
-		});
 		$('#color').change(function() {
 			$(currentObj).css('border-color', $('#color').val());
-		});
-		$('#lightColor').change(function() {
-			$(currentObj).attr('data-lightColor', $('#lightColor').val());
 		});
 	});
 	
