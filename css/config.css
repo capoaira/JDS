@@ -84,11 +84,6 @@ form, table, tr, td:nth-child(2), select {
 	width: 100%;
 }
 
-td:nth-child(1) {
-	text-align: left;
-	padding-right: 30%;
-}
-
 footer {
 	position: fixed;
 	bottom: 0;
