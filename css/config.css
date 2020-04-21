@@ -38,7 +38,7 @@ body {
 	cursor: drag;
 	position: fixed;
 	box-sizing: border-box;
-	border: 5px solid #000;
+	border: 5px solid #363d43;
 	border-radius: 3px;
 	box-shadow: inset 0px 0px 100px -50px rgba(255,255,176,1);
 	-webkit-box-shadow: inset 0px 0px 100px -50px rgba(255,255,176,1);

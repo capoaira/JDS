@@ -16,9 +16,6 @@
 	<!-- Content ================================================================= -->
 		<div id="content">
 			<div class="sidebar">
-				<div>
-					<a class="step4" href="javascript:void(0);" onclick="addRahmen(70, 120, '#000', '#fff');">100 x 40</a>
-				</div>
 				<div class="step1">
 					Lade ein Bild von deiner Wand hoch.<br>
 					<input type="file" id="files" name="files[]" accept="image/png, image/jpg, image/jpeg" multiple="false" /><br>
@@ -34,6 +31,9 @@
 					Markiere in der Vorschau den Bereich deiner Wand.<br>
 					<a class="inactive"  href="javascript:void(0);">weiter</a>
 				</div>
+				<div>
+					<a class="step4" href="javascript:void(0);" onclick="addRahmen(70, 120, '#363d43');">100 x 40</a>
+				</div>
 			</div>
 			<div id="vorschau">
 				<div class="hinweis">Diese Seite ist für ein Schulprojekt, den "Deutschen Gründerpreis für Schüler". <a href="https://www.dgp-schueler.de" target="_blank">Hier</a> findet ihr mehr Hinweise: <a href="https://www.dgp-schueler.de" target="_blank">https://www.dgp-schueler.de</a></div>
@@ -47,36 +47,12 @@
 				<input id="clear" class="step4" type="button" value="Alles löschen" onclick="clearAll();" />
 				<form id="menue" style="display:none;">
 					<table>
-<!--						<tr>
-							<td>Breite:</td>
-							<td>
-								<input id="width" type="number" step="1" value="100" /> cm<br>
-							</td>
-						</tr>
-						<tr>
-							<td>Höhe:</td>
-							<td>
-								<input id="height" type="number" step="1" value="40" /> cm<br>
-							</td>
-						</tr>-->
 						<tr>
 							<td>Rahmenfarbe:</td>
 							<td>
 								<select id="color">
-									<option value="#000">Schwarz</option>
-									<option value="#fff">Weiß</option>
-<!--									<option value="#f00">Rot</option>
-									<option value="#00f">Blau</option>
-									<option value="#0f0">Grün</option>-->
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>Lichtfarbe:</td>
-							<td>
-								<select id="lightColor">
-									<option>Weiß (gedimmt)</option>
-<!--									<option value="#fff">Weiß (hell)</option>
+									<option value="#363d43">Grau </option>
+<!--									<option value="#fff">Weiß</option>
 									<option value="#f00">Rot</option>
 									<option value="#00f">Blau</option>
 									<option value="#0f0">Grün</option>-->

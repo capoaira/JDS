@@ -11,7 +11,7 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 	var wandBreite, wandHoehe;
 	var cmHoehe, cmBreite;		// Gib an, wie viele px ein cm sind
 
-	function addRahmen(height, width, color, lightColor) {
+	function addRahmen(height, width, color) {
 		if (anzahlRahmen >=3) return;
 		anzahlRahmen++;
 		alleRahmen++;
@@ -19,8 +19,7 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 				 + 'class="rahmen" style="'
 				 + 'height:' + height*cmBreite + 'px; '
 				 + 'width:' + width*cmHoehe + 'px;" '
-				 + 'border-color="' + color + '" '
-				 + 'data-lightColor="' + lightColor + '"></div>';
+				 + 'border-color="' + color + '"></div>';
 		$('#vorschau').append(html);
 		$('#rahmenNr' + alleRahmen).css('left', $('#vorschau').position().left + $('#vorschau').width()/2);
 		$('#rahmenNr' + alleRahmen).css('top', $('#vorschau').position().top + $('#vorschau').height()/2);
@@ -80,15 +79,9 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 	function buildMenu(obj) {
 		$('#menue').css('display', 'block');
 		currentObj = obj;
-		$('#width option').removeAttr('selected');
-		$('#height option').removeAttr('selected');
 		$('#color option').removeAttr('selected');
-		$('#lightColor option').removeAttr('selected');
 
-		$('#width option[value*="' + $(currentObj).css('width') + '"]').attr('selected', 'selected');
-		$('#height option[value*="' + $(currentObj).css('height') + '"]').attr('selected', 'selected');
 		$('#color option[value*="' + $(currentObj).css('border-color') + '"]').attr('selected', 'selected');
-		$('#lightColor option[value*="' + $(currentObj).attr('data-lightColor') + '"]').attr('selected', 'selected');
 	}
 
 	function deleteRahmen() {
@@ -129,17 +122,8 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 				drag(toDragElem);
 			}
 		});
-		$('#width').change(function() {
-			$(currentObj).css('width', $('#width').val()*cmBreite + 'px');
-		});
-		$('#height').change(function() {
-			$(currentObj).css('height', $('#height').val()*cmHoehe + 'px');
-		});
 		$('#color').change(function() {
 			$(currentObj).css('border-color', $('#color').val());
-		});
-		$('#lightColor').change(function() {
-			$(currentObj).attr('data-lightColor', $('#lightColor').val());
 		});
 	});
 	
