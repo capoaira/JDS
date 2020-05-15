@@ -23,16 +23,17 @@
 				</div>
 				<div class="step2">
 					Bitte gebe die Höhe und die Breite deiner Wand an:<br>
-					Höhe: <input id="hoehe" type="number" step="1" value="0" /> cm<br>
-					Breite: <input id="breite" type="number" step="1" value="0" /> cm<br>
+					Höhe: <input id="hoehe" type="number" step="1" value="0" min="0" /> cm<br>
+					Breite: <input id="breite" type="number" step="1" value="0"  min="0" /> cm<br>
 					<a class="inactive" href="javascript:void(0);" onclick="step2save();">weiter</a>
 				</div>
 				<div class="step3">
 					Markiere in der Vorschau den Bereich deiner Wand.<br>
 					<a class="inactive"  href="javascript:void(0);">weiter</a>
 				</div>
-				<div>
-					<a class="step4" href="javascript:void(0);" onclick="addRahmen(70, 120, '#363d43');">100 x 40</a>
+				<div class="step4">
+					<a href="javascript:void(0);" onclick="addRahmen(100, 40, '#363d43');">100 x 40</a><br>
+					<a href="javascript:void(0);" onclick="addRahmen(100, 40, '#363d43');addRahmen(100, 40, '#363d43', 20, -30, true);addRahmen(100, 40, '#363d43', -10, -10);">Rahmenpacket</a>
 				</div>
 			</div>
 			<div id="vorschau">
@@ -60,7 +61,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2"><input type="button" value="Drehen" onclick="turn();" /></td>
+							<td colspan="2"><input type="button" value="Drehen" onclick="turnElem();" /></td>
 						</tr>
 						<tr>
 							<td colspan="2"><input type="button" value="Löschen" onclick="deleteRahmen();" /></td>

@@ -10,8 +10,9 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 	var currentObj = null;
 	var wandBreite, wandHoehe;
 	var cmHoehe, cmBreite;		// Gib an, wie viele px ein cm sind
-
-	function addRahmen(height, width, color) {
+	
+	// width, height, color sind in der jetzigen Version nichts sagen, da wir nur ein Produkt mit festen maßen anbieten.
+	function addRahmen(width, height, color, move_widht = 0, move_height = 0, turn = false) {
 		if (anzahlRahmen >=3) return;
 		anzahlRahmen++;
 		alleRahmen++;
@@ -21,13 +22,14 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 				 + 'width:' + width*cmHoehe + 'px;" '
 				 + 'border-color="' + color + '"></div>';
 		$('#vorschau').append(html);
-		$('#rahmenNr' + alleRahmen).css('left', $('#vorschau').position().left + $('#vorschau').width()/2);
-		$('#rahmenNr' + alleRahmen).css('top', $('#vorschau').position().top + $('#vorschau').height()/2);
+		$('#rahmenNr' + alleRahmen).css('left', $('#vorschau').position().left + $('#vorschau').width()/2 + move_widht);
+		$('#rahmenNr' + alleRahmen).css('top', $('#vorschau').position().top + $('#vorschau').height()/2 + move_height);
 		// Mousedown für PC, touchstart für Smartphones
 		$('#rahmenNr' + alleRahmen).on('mousedown', FMousedown);
 		$('#rahmenNr' + alleRahmen).on('mouseup', FMouseup);
 		$('#rahmenNr' + alleRahmen).on('touchstart', FMousedown);
 		$('#rahmenNr' + alleRahmen).on('touchend', FMouseup);
+		if (turn) turnElem($('#rahmenNr' + alleRahmen));
 		
 		function FMousedown() {
 			$('#menue').css('visibility', 'hidden');
@@ -91,11 +93,12 @@ if (document.location.pathname.match(/(konfigurator|config\.html)/)) {
 		anzahlRahmen--;
 	}
 	
-	function turn() {
-		var breite = $(currentObj).css('width');
-		var hoehe = $(currentObj).css('height');
-		$(currentObj).css('width', hoehe);
-		$(currentObj).css('height', breite);
+	function turnElem(obj) {
+		if (!obj) obj = currentObj;
+		var breite = $(obj).css('width');
+		var hoehe = $(obj).css('height');
+		$(obj).css('width', hoehe);
+		$(obj).css('height', breite);
 	}
 
 	function clearAll() {
